@@ -37,11 +37,15 @@ class ViewController: UIViewController {
         return button
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellID)
-        
+        registerCells()
+        setupView()
+    }
+    
+    fileprivate func setupView() {
         view.addSubview(collectionView)
         view.addSubview(buttonStackView)
         buttonStackView.addArrangedSubview(settingsButton)
@@ -62,6 +66,10 @@ class ViewController: UIViewController {
         ])
     }
     
+    fileprivate func registerCells() {
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+    }
+    
     @objc func settingsButtonTapped() {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
             return
@@ -69,7 +77,7 @@ class ViewController: UIViewController {
 
         if UIApplication.shared.canOpenURL(settingsUrl) {
             UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                print("Settings opened: \(success)") // Prints true
+                print("Settings opened: \(success)")
             })
         }
     }
